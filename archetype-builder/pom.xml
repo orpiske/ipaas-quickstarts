@@ -182,6 +182,18 @@
         <quickstarts.repo>https://github.com</quickstarts.repo>
         <version.karaf-camel-amq>master</version.karaf-camel-amq>
         <version.karaf-camel-log>master</version.karaf-camel-log>
+        <version.karaf-camel-rest-sql>master</version.karaf-camel-rest-sql>
+        <version.karaf-cxf-rest>master</version.karaf-cxf-rest>
+        <version.spring-boot-camel>master</version.spring-boot-camel>
+        <version.spring-boot-camel-amq>master</version.spring-boot-camel-amq>
+        <version.spring-boot-camel-config>master</version.spring-boot-camel-config>
+        <version.spring-boot-camel-drools>master</version.spring-boot-camel-drools>
+        <version.spring-boot-camel-infinispan>master</version.spring-boot-camel-infinispan>
+        <version.spring-boot-camel-rest-sql>master</version.spring-boot-camel-rest-sql>
+        <version.spring-boot-camel-teiid>master</version.spring-boot-camel-teiid>
+        <version.spring-boot-camel-xml>master</version.spring-boot-camel-xml>
+        <version.spring-boot-cxf-jaxrs>master</version.spring-boot-cxf-jaxrs>
+        <version.spring-boot-cxf-jaxws>master</version.spring-boot-cxf-jaxws>
       </properties>
 
       <build>
