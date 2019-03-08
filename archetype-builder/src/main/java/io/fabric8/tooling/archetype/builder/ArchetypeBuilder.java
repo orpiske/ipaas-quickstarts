@@ -108,6 +108,7 @@ public class ArchetypeBuilder extends AbstractBuilder{
      * Iterates through all projects in the given properties file adn generate an archetype for it
      */
     public void generateArchetypesFromGitRepoList(File file, File outputDir, List<String> dirs) throws IOException {
+        System.out.println("Checking out from file");
         File cloneParentDir = new File(outputDir, "../git-clones");
         if (cloneParentDir.exists()) {
             Files.recursiveDelete(cloneParentDir);
@@ -134,7 +135,7 @@ public class ArchetypeBuilder extends AbstractBuilder{
         File cloneDir = new File(cloneParentDir, archetypeFolderName);
         cloneDir.mkdirs();
 
-        System.out.println("Cloning repo " + repoURL + " to " + cloneDir);
+        System.out.println("Cloning repo " + repoURL + (tag == null ? "" : " version + " + tag) + " to " + cloneDir);
         cloneDir.getParentFile().mkdirs();
         if (cloneDir.exists()) {
             Files.recursiveDelete(cloneDir);

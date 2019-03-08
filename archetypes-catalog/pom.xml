@@ -31,6 +31,19 @@
   <artifactId>archetypes-catalog</artifactId>
   <name>Fabric8 :: Archetypes :: Catalog</name>
 
+    <properties>
+        <mode>online</mode>
+    </properties>
+
+  <profiles>
+    <profile>
+      <id>offline</id>
+      <properties>
+        <mode>offline</mode>
+      </properties>
+    </profile>
+  </profiles>
+
   <build>
     <plugins>
       <plugin>
@@ -64,6 +77,10 @@
             <systemProperty>
               <key>outputdir</key>
               <value>${basedir}/../archetypes</value>
+            </systemProperty>
+            <systemProperty>
+              <key>mode</key>
+              <value>${mode}</value>
             </systemProperty>
           </systemProperties>
         </configuration>

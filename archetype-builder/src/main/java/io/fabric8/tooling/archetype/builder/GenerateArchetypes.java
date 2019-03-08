@@ -30,38 +30,50 @@ public class GenerateArchetypes {
 
     public static void main(String[] args) throws Exception {
 
+        String mode = System.getProperty("mode");
         String sourcedir = System.getProperty("sourcedir");
         String outputPath = System.getProperty("outputdir", ",");
         File outputDir = new File(outputPath);
 
         ArchetypeBuilder builder = new ArchetypeBuilder();
 
-        List<String> dirs = new ArrayList<>();
-        try {
-            if( sourcedir != null ) {
-                File sourceDirectory = new File(sourcedir);
-                if (!sourceDirectory.exists() || !sourceDirectory.isDirectory()) {
-                    throw new IllegalArgumentException("Source directory: " + sourcedir + " is not a valid directory");
+        if (mode == null || "online".equals(mode)) {
+            List<String> dirs = new ArrayList<>();
+            try {
+                if (sourcedir != null) {
+                    File sourceDirectory = new File(sourcedir);
+                    if (!sourceDirectory.exists() || !sourceDirectory.isDirectory()) {
+                        throw new IllegalArgumentException("Source directory: " + sourcedir + " is not a valid directory");
+                    }
+                    builder.generateArchetypes("", sourceDirectory, outputDir, false, dirs);
                 }
-                builder.generateArchetypes("", sourceDirectory, outputDir, false, dirs);
+
+                String repoListFile = System.getProperty("repos", "").trim();
+                if (repoListFile.isEmpty()) {
+                    builder.generateArchetypesFromGithubOrganisation("fabric8-quickstarts", outputDir, dirs);
+                } else {
+                    builder.generateArchetypesFromGitRepoList(new File(repoListFile), outputDir, dirs);
+                }
+
+            } finally {
+                LOG.debug("Completed the generation. Closing!");
             }
 
-            String repoListFile = System.getProperty("repos", "").trim();
-            if( repoListFile.isEmpty() ) {
-                builder.generateArchetypesFromGithubOrganisation("fabric8-quickstarts", outputDir, dirs);
-            } else {
-                builder.generateArchetypesFromGitRepoList(new File(repoListFile), outputDir, dirs);
+            StringBuffer sb = new StringBuffer();
+            for (String dir : dirs) {
+                sb.append("\n\t<module>" + dir + "</module>");
             }
-
-        } finally {
-            LOG.debug("Completed the generation. Closing!");
+            System.out.println("Done creating archetypes:\n" + sb + "\n");
+        }
+        else {
+            if (mode != null && "offline".equals(mode)) {
+                System.out.println("Generating the archetypes in offline mode");
+            }
+            else {
+                System.out.println("Invalid mode");
+            }
         }
 
-        StringBuffer sb = new StringBuffer();
-        for (String dir : dirs) {
-            sb.append("\n\t<module>" + dir + "</module>");
-        }
-        System.out.println("Done creating archetypes:\n" + sb + "\n");
 
         PomValidator validator = new PomValidator(new File("../git-clones"));
         validator.validate();

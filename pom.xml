@@ -93,7 +93,6 @@
          to clone instead of using the discovered the github repos. -->
     <quickstart.git.repos/>
     <quickstart.git.version>master</quickstart.git.version>
-
   </properties>
 
   <modules>
@@ -262,6 +261,7 @@
   </dependencyManagement>
 
   <profiles>
+
     <profile>
       <id>fabric8-snapshot</id>
       <properties>
